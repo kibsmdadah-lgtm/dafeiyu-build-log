@@ -1,0 +1,37 @@
+# 密钥与本地数据
+.env
+*.env
+!.env.example
+!env.example
+
+# bootstrap 拉下来的上游副本与产物
+dafeiyu-astrbot/
+payload/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv-*/
+*.egg-info/
+
+# 运行数据
+*.db
+*.sqlite
+*.sqlite3
+*.log
+livingmemory.db
+
+# 媒体与会话缓存
+data/
+sessions/
+*.mp4
+*.wav
+*.mp3
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

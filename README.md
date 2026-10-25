@@ -8,6 +8,33 @@
 
 ---
 
+## 🚀 快速开始（拉取即部署）
+
+**代码在哪**：插件、人格、部署套件在 → **[whyever77/dafeiyu-astrbot](https://github.com/whyever77/dafeiyu-astrbot)**（公开，可直接 clone）
+**本仓库是什么**：这本手册 + 一个能一键把上游拉下来、装好依赖、跑通自检的部署包
+
+```bash
+git clone https://github.com/kibsmdadah-lgtm/dafeiyu-build-log.git
+cd dafeiyu-build-log
+
+python deploy-kit/preflight.py          # 1. 前置检查（阻塞项先解决）
+bash deploy-kit/bootstrap.sh            # 2. 拉上游+装依赖+自检，看到"全部通过 OK"就对了
+cp deploy-kit/env.example .env          # 3. 填 DeepSeek / 百炼 密钥
+```
+
+Windows 用 `powershell -ExecutionPolicy Bypass -File deploy-kit\bootstrap.ps1`。
+
+三条跑完，你的目录里会多出 `dafeiyu-astrbot/`（上游代码）和它下面的 `payload/`
+（已经分好 `plugins/` 和 `persona/`，等着拷进 AstrBot 数据目录）。
+
+剩下三件手工活是脚本替不了的：**装 AstrBot 与 NapCat、扫码登录小号、填密钥**。
+→ 完整十步见 **[QUICKSTART.md](QUICKSTART.md)**，每一步的"为什么"见下面各章。
+
+> 部署包里有什么：`preflight.py`（环境/端口/依赖/密钥体检）、`bootstrap.sh` 与 `.ps1`
+> （克隆→venv→依赖→组装→跑测试）、`requirements-plugin.txt`、`env.example`。
+
+---
+
 ## 0. 怎么用这本手册
 
 | 你想干什么 | 看哪一章 | 大概耗时 |
@@ -572,7 +599,23 @@ powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0
 
 ---
 
-## 16. 目录结构
+## 16. 仓库结构
+
+**本仓库（手册 + 部署包）**
+
+```
+README.md                  这本手册
+QUICKSTART.md              十条命令跑通（先看这个）
+deploy-kit/
+  preflight.py             环境/端口/依赖/密钥体检
+  bootstrap.sh             一键：克隆上游 → venv → 依赖 → 组装 → 自检
+  bootstrap.ps1            同上，Windows PowerShell 版
+  requirements-plugin.txt  插件依赖（dashscope / imageio-ffmpeg / aiohttp）
+  env.example              密钥模板
+docs/构建记.md              这东西是怎么一步步长出来的
+```
+
+**上游项目 [whyever77/dafeiyu-astrbot](https://github.com/whyever77/dafeiyu-astrbot)（clone 下来才有）**
 
 ```
 plugin/astrbot_plugin_face_convert/      核心插件（直接可装）
@@ -586,7 +629,6 @@ docs/视频识别.md                          视频参数与边界
 docs/知识库笔记.md                        知识库接线
 docs/知识库-热梗词典示例.md                现成热梗词典
 docs/踩坑合集.md                          ⭐ 21 条坑与解法原文
-docs/构建记.md                            这东西是怎么一步步长出来的
 deploy/                                  云上安家（Compose / 备份 / 嵌入切换）
 deploy/phone_mcp/                        模拟器接入
 deploy/ops_mcp/                          云端运维 MCP
